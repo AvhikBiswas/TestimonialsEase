@@ -23,8 +23,10 @@ model User {
 }
 
 model TestCreate {
-  id           String        @id @default(uuid())
-  customUrl    String
+  id               String @id @default(uuid())
+  customUrl        String
+  OrganizationLogo String
+
   userId       String
   user         User          @relation(fields: [userId], references: [id])
   testimonials Testimonial[]
@@ -32,14 +34,14 @@ model TestCreate {
 }
 
 model Questions {
-  id           String     @id @default(uuid())
-  email        Boolean    @default(true)
-  userImageURL Boolean    @default(false)
-  vedio        Boolean    @default(false)
-  stars        Boolean    @default(true)
-  fName        Boolean    @default(true)
-  revew        Boolean    @default(true)
-  
+  id           String  @id @default(uuid())
+  email        Boolean @default(true)
+  userImageURL Boolean @default(false)
+  vedio        Boolean @default(false)
+  stars        Boolean @default(true)
+  fName        Boolean @default(true)
+  revew        Boolean @default(true)
+
   testCreateId String     @unique
   testCreate   TestCreate @relation(fields: [testCreateId], references: [id])
 }
