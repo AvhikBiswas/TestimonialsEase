@@ -12,3 +12,48 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id          String       @id @default(uuid())
+  email       String       @unique
+  password    String?
+  firstName   String
+  lastName    String
+  testCreates TestCreate[]
+}
+
+model TestCreate {
+  id           String        @id @default(uuid())
+  customUrl    String
+  userId       String
+  user         User          @relation(fields: [userId], references: [id])
+  testimonials Testimonial[]
+  questionsId  Questions?
+}
+
+model Questions {
+  id           String     @id @default(uuid())
+  email        Boolean    @default(true)
+  userImageURL Boolean    @default(false)
+  vedio        Boolean    @default(false)
+  stars        Boolean    @default(true)
+  fName        Boolean    @default(true)
+  revew        Boolean    @default(true)
+  
+  testCreateId String     @unique
+  testCreate   TestCreate @relation(fields: [testCreateId], references: [id])
+}
+
+model Testimonial {
+  id           String   @id @default(uuid())
+  fName        String
+  stars        Int
+  revew        String
+  email        String
+  userImageURL String
+  createdAt    DateTime @default(now())
+  vedio        String
+
+  testCreateId String
+  testCreate   TestCreate @relation(fields: [testCreateId], references: [id])
+}
